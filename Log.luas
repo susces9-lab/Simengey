@@ -1,0 +1,396 @@
+-- SWILL LOGGER FOR SAILOR PIECE (С ПОЛНЫМ GUI)
+-- Отслеживает предметы + показывает статус подключения и логи
+
+wait(2)
+
+local player = game.Players.LocalPlayer
+local gui = player:WaitForChild("PlayerGui")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+
+-- Удаляем старый GUI
+for _, v in pairs(gui:GetChildren()) do
+    if v.Name == "SWILL_LoggerGUI" then v:Destroy() end
+end
+
+-- ==================================================
+-- НАСТРОЙКИ
+-- ==================================================
+local DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1499531585714786355/95u5iFddbQP8sVHk1QSBAQOMTuPHCxLCBEK7XDZDUsfOqVcgvBjKuURYbjY2_q2BpdSw"
+
+local trackedItems = {
+    "Radiant Rune", "Primordial Rune", "Shadow Crystal", "Monarch Essence",
+    "Power Fragment", "Time Remnant", "World Core", "Vampire Omen",
+    "Dominion Brand", "Cosmic Essence", "Star Mark", "Galaxy Shard",
+    "Monster Pulse", "Relic Part"
+}
+
+-- ==================================================
+-- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ GUI
+-- ==================================================
+local isMinimized = false
+local logMessages = {}
+local connectionStatus = "⏳ ПОДКЛЮЧЕНИЕ..."
+local lastSentTime = 0
+
+-- ==================================================
+-- СОЗДАНИЕ GUI
+-- ==================================================
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "SWILL_LoggerGUI"
+screenGui.Parent = gui
+screenGui.ResetOnSpawn = false
+screenGui.IgnoreGuiInset = true
+
+-- Главное окно
+local mainFrame = Instance.new("Frame")
+mainFrame.Parent = screenGui
+mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+mainFrame.BackgroundTransparency = 0.1
+mainFrame.Size = UDim2.new(0, 350, 0, 450)
+mainFrame.Position = UDim2.new(0.5, -175, 0.5, -225)
+mainFrame.Active = true
+mainFrame.Draggable = true
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = mainFrame
+
+-- Кнопка сворачивания
+local minimizeBtn = Instance.new("TextButton")
+minimizeBtn.Parent = mainFrame
+minimizeBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
+minimizeBtn.Size = UDim2.new(0, 30, 0, 30)
+minimizeBtn.Position = UDim2.new(1, -60, 0, 5)
+minimizeBtn.Text = "➖"
+minimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+minimizeBtn.Font = Enum.Font.GothamBold
+minimizeBtn.TextScaled = true
+
+-- Кнопка закрытия
+local closeBtn = Instance.new("TextButton")
+closeBtn.Parent = mainFrame
+closeBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+closeBtn.Size = UDim2.new(0, 30, 0, 30)
+closeBtn.Position = UDim2.new(1, -30, 0, 5)
+closeBtn.Text = "✕"
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextScaled = true
+closeBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+-- Заголовок
+local title = Instance.new("TextLabel")
+title.Parent = mainFrame
+title.BackgroundColor3 = Color3.fromRGB(138, 43, 226)
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Text = "📡 SWILL LOGGER"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextScaled = true
+
+-- Статус подключения (цветная полоска)
+local statusBar = Instance.new("Frame")
+statusBar.Parent = mainFrame
+statusBar.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
+statusBar.Size = UDim2.new(1, 0, 0, 5)
+statusBar.Position = UDim2.new(0, 0, 0, 40)
+
+-- Область логов
+local logFrame = Instance.new("ScrollingFrame")
+logFrame.Parent = mainFrame
+logFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+logFrame.BackgroundTransparency = 0.5
+logFrame.Size = UDim2.new(0.95, 0, 0.7, 0)
+logFrame.Position = UDim2.new(0.025, 0, 0.12, 0)
+logFrame.CanvasSize = UDim2.new(0, 0, 2, 0)
+logFrame.ScrollBarThickness = 6
+
+local logText = Instance.new("TextLabel")
+logText.Parent = logFrame
+logText.BackgroundTransparency = 1
+logText.Size = UDim2.new(1, -20, 1, -20)
+logText.Position = UDim2.new(0, 10, 0, 10)
+logText.Text = "🟢 SWILL LOGGER ЗАПУЩЕН\n"
+logText.TextColor3 = Color3.fromRGB(255, 255, 255)
+logText.Font = Enum.Font.Gotham
+logText.TextScaled = true
+logText.TextXAlignment = Enum.TextXAlignment.Left
+logText.TextWrapped = true
+
+-- Статус
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Parent = mainFrame
+statusLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+statusLabel.BackgroundTransparency = 0.5
+statusLabel.Size = UDim2.new(0.95, 0, 0, 30)
+statusLabel.Position = UDim2.new(0.025, 0, 0.86, 0)
+statusLabel.Text = "⏳ ПРОВЕРКА ПОДКЛЮЧЕНИЯ..."
+statusLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+statusLabel.Font = Enum.Font.GothamBold
+statusLabel.TextScaled = true
+
+-- Кнопка отправки теста
+local testBtn = Instance.new("TextButton")
+testBtn.Parent = mainFrame
+testBtn.BackgroundColor3 = Color3.fromRGB(0, 191, 255)
+testBtn.Size = UDim2.new(0.44, 0, 0, 30)
+testBtn.Position = UDim2.new(0.05, 0, 0.92, 0)
+testBtn.Text = "📨 ТЕСТОВОЕ"
+testBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+testBtn.Font = Enum.Font.GothamBold
+testBtn.TextScaled = true
+
+-- Кнопка очистки логов
+local clearBtn = Instance.new("TextButton")
+clearBtn.Parent = mainFrame
+clearBtn.BackgroundColor3 = Color3.fromRGB(255, 100, 0)
+clearBtn.Size = UDim2.new(0.44, 0, 0, 30)
+clearBtn.Position = UDim2.new(0.51, 0, 0.92, 0)
+clearBtn.Text = "🗑️ ОЧИСТИТЬ"
+clearBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+clearBtn.Font = Enum.Font.GothamBold
+clearBtn.TextScaled = true
+
+-- Маленькая свёрнутая версия
+local miniFrame = Instance.new("Frame")
+miniFrame.Parent = screenGui
+miniFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+miniFrame.Size = UDim2.new(0, 60, 0, 60)
+miniFrame.Position = UDim2.new(0, 20, 0.5, -30)
+miniFrame.Active = true
+miniFrame.Draggable = true
+miniFrame.Visible = false
+
+local miniCorner = Instance.new("UICorner")
+miniCorner.CornerRadius = UDim.new(0, 30)
+miniCorner.Parent = miniFrame
+
+local miniStatus = Instance.new("Frame")
+miniStatus.Parent = miniFrame
+miniStatus.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
+miniStatus.Size = UDim2.new(0, 15, 0, 15)
+miniStatus.Position = UDim2.new(0, 5, 0, 5)
+
+local miniStatusCorner = Instance.new("UICorner")
+miniStatusCorner.CornerRadius = UDim.new(1, 0)
+miniStatusCorner.Parent = miniStatus
+
+local miniLabel = Instance.new("TextLabel")
+miniLabel.Parent = miniFrame
+miniLabel.BackgroundTransparency = 1
+miniLabel.Size = UDim2.new(1, 0, 1, 0)
+miniLabel.Text = "📡"
+miniLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+miniLabel.Font = Enum.Font.GothamBold
+miniLabel.TextScaled = true
+
+-- ==================================================
+-- ФУНКЦИИ GUI
+-- ==================================================
+local function addLog(msg, color)
+    local time = os.date("%H:%M:%S")
+    table.insert(logMessages, 1, "[" .. time .. "] " .. msg)
+    if #logMessages > 50 then table.remove(logMessages) end
+    
+    local display = ""
+    for i = #logMessages, 1, -1 do
+        display = display .. logMessages[i] .. "\n"
+    end
+    logText.Text = display
+    logFrame.CanvasSize = UDim2.new(0, 0, 0, #logMessages * 25)
+end
+
+local function updateStatus(text, color)
+    statusLabel.Text = text
+    statusLabel.TextColor3 = color
+    addLog("📡 " .. text, color)
+end
+
+local function updateConnectionStatus(success)
+    if success then
+        connectionStatus = "✅ ПОДКЛЮЧЕНО"
+        statusBar.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        miniStatus.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        updateStatus("✅ Discord: подключено", Color3.fromRGB(0, 255, 0))
+    else
+        connectionStatus = "❌ ОШИБКА"
+        statusBar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        miniStatus.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        updateStatus("❌ Discord: ошибка подключения", Color3.fromRGB(255, 0, 0))
+    end
+end
+
+-- Сворачивание/разворачивание
+minimizeBtn.MouseButton1Click:Connect(function()
+    isMinimized = true
+    mainFrame.Visible = false
+    miniFrame.Visible = true
+end)
+
+miniFrame.MouseButton1Click:Connect(function()
+    isMinimized = false
+    mainFrame.Visible = true
+    miniFrame.Visible = false
+end)
+
+clearBtn.MouseButton1Click:Connect(function()
+    logMessages = {}
+    logText.Text = "🗑️ Логи очищены\n"
+    addLog("Логи очищены", Color3.fromRGB(255, 165, 0))
+end)
+
+-- ==================================================
+-- DISCORD ФУНКЦИИ
+-- ==================================================
+local function sendToDiscord(embedData)
+    local data = {
+        embeds = {embedData}
+    }
+    
+    local success, err = pcall(function()
+        HttpService:PostAsync(DISCORD_WEBHOOK_URL, HttpService:JSONEncode(data))
+    end)
+    
+    if success then
+        addLog("✅ Отправлено в Discord: " .. (embedData.title or "уведомление"), Color3.fromRGB(0, 255, 0))
+        return true
+    else
+        addLog("❌ Ошибка отправки: " .. tostring(err), Color3.fromRGB(255, 0, 0))
+        return false
+    end
+end
+
+-- Тестовая отправка
+testBtn.MouseButton1Click:Connect(function()
+    addLog("📨 Отправка тестового сообщения...", Color3.fromRGB(255, 255, 0))
+    sendToDiscord({
+        title = "🧪 ТЕСТОВОЕ СООБЩЕНИЕ",
+        description = "Скрипт работает и соединение с Discord установлено!\n**Игрок:** " .. player.Name,
+        color = 0x57F287,
+        footer = {text = "Время: " .. os.date("%Y-%m-%d %H:%M:%S")}
+    })
+end)
+
+-- ==================================================
+-- ОСНОВНАЯ ЛОГИКА ЛОГГЕРА
+-- ==================================================
+local inventory = player:FindFirstChild("Inventory") or player:FindFirstChild("Data") or player:FindFirstChild("Backpack")
+
+if not inventory then
+    addLog("⚠️ Папка инвентаря не найдена!", Color3.fromRGB(255, 165, 0))
+    sendToDiscord({
+        title = "⚠️ Ошибка инициализации",
+        description = "Папка инвентаря не найдена. Скрипт может работать некорректно.",
+        color = 0xED4245
+    })
+end
+
+-- Отправляем приветственное сообщение
+local welcomeSent = sendToDiscord({
+    title = "🤖 SWILL Logger активирован",
+    description = "Отслеживание инвентаря запущено\n**Игрок:** " .. player.Name,
+    color = 0x57F287,
+    footer = {text = "Время: " .. os.date("%Y-%m-%d %H:%M:%S")}
+})
+updateConnectionStatus(welcomeSent)
+
+local previousCounts = {}
+
+local function checkInventory()
+    if not inventory then return end
+    
+    for _, item in pairs(inventory:GetChildren()) do
+        local itemName = item.Name
+        
+        local isTracked = false
+        for _, tracked in ipairs(trackedItems) do
+            if itemName:find(tracked) then
+                isTracked = true
+                break
+            end
+        end
+        
+        if isTracked then
+            local currentValue = 0
+            if item:IsA("IntValue") or item:IsA("NumberValue") then
+                currentValue = item.Value
+            end
+            
+            local previousValue = previousCounts[itemName] or 0
+            
+            if currentValue > previousValue then
+                local gained = currentValue - previousValue
+                addLog("📦 +" .. gained .. " " .. itemName, Color3.fromRGB(0, 255, 0))
+                sendToDiscord({
+                    title = "📦 ПОЛУЧЕН ПРЕДМЕТ!",
+                    description = string.format(
+                        "**Предмет:** %s\n**Получено:** +%d шт.\n**Теперь:** %d шт.",
+                        itemName, gained, currentValue
+                    ),
+                    color = 0x57F287,
+                    footer = {text = "Игрок: " .. player.Name}
+                })
+            end
+            
+            previousCounts[itemName] = currentValue
+        end
+    end
+end
+
+-- Запуск проверки
+spawn(function()
+    if inventory then
+        for _, item in pairs(inventory:GetChildren()) do
+            if item:IsA("IntValue") or item:IsA("NumberValue") then
+                previousCounts[item.Name] = item.Value
+            end
+        end
+    end
+    
+    while true do
+        wait(2)
+        checkInventory()
+    end
+end)
+
+if inventory then
+    inventory.ChildAdded:Connect(function(child)
+        local itemName = child.Name
+        
+        local isTracked = false
+        for _, tracked in ipairs(trackedItems) do
+            if itemName:find(tracked) then
+                isTracked = true
+                break
+            end
+        end
+        
+        if isTracked then
+            local value = ""
+            if child:IsA("IntValue") or child:IsA("NumberValue") then
+                value = tostring(child.Value) .. " шт."
+                previousCounts[itemName] = child.Value
+            else
+                value = "получен!"
+            end
+            
+            addLog("🎉 Новый предмет: " .. itemName, Color3.fromRGB(100, 255, 100))
+            sendToDiscord({
+                title = "🎉 НОВЫЙ ПРЕДМЕТ!",
+                description = string.format("**Предмет:** %s\n**Количество:** %s", itemName, value),
+                color = 0x57F287,
+                footer = {text = "Игрок: " .. player.Name}
+            })
+        end
+    end)
+end
+
+addLog("🟢 SWILL LOGGER ЗАПУЩЕН", Color3.fromRGB(0, 255, 0))
+addLog("📡 Отслеживается " .. #trackedItems .. " предметов", Color3.fromRGB(255, 255, 255))
+addLog("👤 Игрок: " .. player.Name, Color3.fromRGB(255, 255, 255))
+
+print("✅ SWILL LOGGER GUI ЗАГРУЖЕН")
