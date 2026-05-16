@@ -1,0 +1,359 @@
+{
+  "card_001": {
+    "name": "Рокси",
+    "element": "вода",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIH0moGGMvRWej8aNDHqWnj2zjKtqA0AAJDGWsbHb8xSAQOhcVqcJi2AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_002": {
+    "name": "Куруми",
+    "element": "песок",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIH3moGGODsi-Dfh9ajSiBrAsMGMNOnAAJGGWsbHb8xSF4UnYq5b4t6AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_003": {
+    "name": "Канеки",
+    "element": "лёд",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIH6moGGPC6ksat5Oo6Z_wCFk5sZ4U5AALbE2sb6H4xSAa6SbTSlf3EAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_004": {
+    "name": "Миса",
+    "element": "земля",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIH9moGGPqM7tZ7E78Bia28lGMZs2I0AALcE2sb6H4xSJ6T6Pm2H1-iAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_005": {
+    "name": "Ренгоку",
+    "element": "огонь",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIIBGoGGRWPJrqPPptRNf471w9HwV2sAALeE2sb6H4xSClONf_-0hXAAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_006": {
+    "name": "Хината",
+    "element": "ветер",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIICmoGGSErrow5P0mU-_6TQD2ULMQKAALgE2sb6H4xSGT7B-LTHg7YAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_007": {
+    "name": "Сакура",
+    "element": "дерево",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIIFGoGGS3SUJMqf7TyqC63iavW1hSOAALiE2sb6H4xSEN77l-_ClZkAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_008": {
+    "name": "Эш",
+    "element": "молния",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIIHmoGGTesLTR1Kw8F7E4FRmorhjBDAALkE2sb6H4xSJKChVV3ySiYAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_009": {
+    "name": "Эрза",
+    "element": "металл",
+    "rating": 80,
+    "media": "AgACAgIAAxkBAAIIJGoGGUy2t80tjrfdcrULnufTNx3-AALlE2sb6H4xSAueDFcCtF7yAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_010": {
+    "name": "Гатс",
+    "element": "металл",
+    "rating": 84,
+    "media": "AgACAgIAAxkBAAIINmoGGdfqOEcbfA3gqVMK9P2Gewf1AAL0E2sb6H4xSLZYribt3SCTAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_011": {
+    "name": "Рукия",
+    "element": "лёд",
+    "rating": 84,
+    "media": "AgACAgIAAxkBAAIIRGoGGedC7plBdtQeJR5MobxfOPp8AAL1E2sb6H4xSCZ0ahWxb8smAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_012": {
+    "name": "Бер",
+    "element": "дерево",
+    "rating": 84,
+    "media": "AgACAgIAAxkBAAIIU2oGGfcLEUxwRqSYVCWw1ZIkvD-tAAL2E2sb6H4xSCvpiOvElD2VAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_013": {
+    "name": "Боруто",
+    "element": "молния",
+    "rating": 84,
+    "media": "AgACAgIAAxkBAAIIZWoGGhMDe_oETxlKDM7WksV0hfx8AAL3E2sb6H4xSNvfZeWPszH-AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_014": {
+    "name": "Симон",
+    "element": "песок",
+    "rating": 85,
+    "media": "AgACAgIAAxkBAAIIcWoGGiBq9liS8dWtoHVrHanP9oODAAL4E2sb6H4xSFb0q_5xYeDMAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_015": {
+    "name": "Шигео",
+    "element": "ветер",
+    "rating": 85,
+    "media": "AgACAgIAAxkBAAIIfWoGGiqiDAYxwlsXrSX6GKvR_bH-AAL5E2sb6H4xSEX-E-73vo0nAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_016": {
+    "name": "Хао",
+    "element": "огонь",
+    "rating": 85,
+    "media": "AgACAgIAAxkBAAIIj2oGGkDmP4qlaMPmVCpWfLEqzBnjAAL6E2sb6H4xSKR3XutfJojGAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_017": {
+    "name": "Сон",
+    "element": "вода",
+    "rating": 85,
+    "media": "AgACAgIAAxkBAAIIl2oGGkxtLdwcwrc0h2dY_ivcAb9pAAL7E2sb6H4xSOfmjAY2VYB3AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_018": {
+    "name": "Махорага",
+    "element": "дерево",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHxGoGGFJ1i5z0NJgNP7-HqKs8Kak-AALJEWsb4lM5SMBQLQrOI3oBAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_019": {
+    "name": "Адам",
+    "element": "дерево",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHsmoGGDO5xXNRCq3CN4lGm5gEFuaGAALEEWsb4lM5SDkkz4vfxmf5AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_020": {
+    "name": "Наруто",
+    "element": "ветер",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIH7moGGPCYFAHXJ2JMHnwGMBVH-RB5AALPEWsb4lM5SCEGjgoJFWbXAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_021": {
+    "name": "Сид",
+    "element": "ветер",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIH2GoGGNYHl-pG30k_f_UOMNgJJmhpAALNEWsb4lM5SIUzRp4ONJwCAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_022": {
+    "name": "Айзен",
+    "element": "песок",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHb2oGF09Gu2hwIvkzbJvxbu4MQZNDAAL4E2sbMX4RSE9uWWjn8XkFAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_023": {
+    "name": "Соломон",
+    "element": "песок",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHl2oGF_jKjZ1OLQABS6k1ap2A_OmsfgACwBFrG-JTOUj7Mc3zLysUZQEAAwIAA3kAAzsE",
+    "media_type": "photo"
+  },
+  "card_024": {
+    "name": "Эсдес",
+    "element": "лёд",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIH42oGGOKDbUs3fgUegnI1LxTe7jnPAALOEWsb4lM5SIhY9YCZ6CmPAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_025": {
+    "name": "Аинз",
+    "element": "молния",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHo2oGGBg1V-Eju9coe9aWKqNkGi2bAALCEWsb4lM5SHx7r7VsKFL5AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_026": {
+    "name": "Мэш",
+    "element": "металл",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIH-moGGP-bGweoeUyCF7Yls1EDco83AALQEWsb4lM5SCgYA7wAAVQ9BQEAAwIAA3kAAzsE",
+    "media_type": "photo"
+  },
+  "card_027": {
+    "name": "Рудеус",
+    "element": "вода",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHvmoGGETcVR23C259o-amUb-My3rNAALIEWsb4lM5SO-iItZ9T4KeAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_028": {
+    "name": "Кирито",
+    "element": "вода",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHdWoGF2i1EH3x95AT7Z8-G5RjKd92AAL2E2sbMX4RSOQAASqSvE9Z5QEAAwIAA3kAAzsE",
+    "media_type": "photo"
+  },
+  "card_029": {
+    "name": "Макима",
+    "element": "огонь",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHnWoGGAgzFSmwF0cdju9Jx7MXs6zCAALBEWsb4lM5SPS222FdLOxaAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_030": {
+    "name": "Ёричии",
+    "element": "огонь",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHqWoGGCd-XNz3mQsnfNGjeO4leCdVAALDEWsb4lM5SCZFX0lvhlpNAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_031": {
+    "name": "Мадара",
+    "element": "огонь",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHgWoGF5tB20e8jnJw39OHQBuBq8V9AAK9EWsb4lM5SC2OkDDMvvOxAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_032": {
+    "name": "Субару",
+    "element": "молния",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAIHaWoGFyXwShaTB7g-d-BFJIsGOYFdAAK5EWsb4lM5SN4prytmEr7mAQADAgADdwADOwQ",
+    "media_type": "photo"
+  },
+  "card_033": {
+    "name": "Саске",
+    "element": "молния",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIi2oGGj-WnoJz-638kiTL8lkk2KNXAALcEWsb4lM5SGAxdDQR5oppAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_034": {
+    "name": "Лелуш",
+    "element": "песок",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIg2oGGjI0pAX09CqzOUaHJ4VeNPNjAALbEWsb4lM5SGU9X0OnjBJkAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_035": {
+    "name": "Артурия",
+    "element": "молния",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIQmoGGeOGZFExcpRVe7K5TbkBJ0yuAALVEWsb4lM5SFFoStjJ6lVQAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_036": {
+    "name": "Шинра",
+    "element": "огонь",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIq2oGGpir0mVqdgwU1gFWR3Tw7HyHAALwEWsb4lM5SLpV8sE5gfIkAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_037": {
+    "name": "Тач",
+    "element": "металл",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIdWoGGiH0bLIw6B0gtdb0vi3mky-xAALaEWsb4lM5SEXbdgQsRDqpAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_038": {
+    "name": "Акнология",
+    "element": "ветер",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIpWoGGo4e5X_RmEAdSdnn_Wle5N06AALuEWsb4lM5SBTAez3x7_vgAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_039": {
+    "name": "Дио",
+    "element": "молния",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIaGoGGhPBhEYb6Fnqo0JrlXB_pB7iAALZEWsb4lM5SF9FjGyvwu_TAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_040": {
+    "name": "Люциус",
+    "element": "песок",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIGmoGGTFF7cHMAqONGAK4necWG3CmAALREWsb4lM5SLTFz9PJQvkzAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_041": {
+    "name": "Яхве",
+    "element": "дерево",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIn2oGGoSoavocJGtve0KFD0e7-CFJAALtEWsb4lM5SOILkna_nX2GAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_042": {
+    "name": "Луффи",
+    "element": "ветер",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIXWoGGgZBdg-BTCLx_IPNG0PK751dAALYEWsb4lM5SDfNEbE6wGg8AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_043": {
+    "name": "Сукуна",
+    "element": "огонь",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIV2oGGftuoJAcMfoO33B7ZQIiuSHRAALXEWsb4lM5SDDtDbT0FgihAQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_044": {
+    "name": "Римуру",
+    "element": "вода",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIOmoGGdnyqjr5ARiQb32gzmV4urwdAALUEWsb4lM5SO-FVWY4EK46AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_045": {
+    "name": "Сайтама",
+    "element": "огонь",
+    "rating": 100,
+    "media": "AgACAgIAAxkBAAIIMGoGGc2zKtHG1sSt1T19xyjV_2IhAALTEWsb4lM5SLiEMMfNQhb_AQADAgADeQADOwQ",
+    "media_type": "photo"
+  },
+  "card_046": {
+    "name": "Ичиго",
+    "element": "ветер",
+    "rating": 101,
+    "media": "BAACAgIAAxkBAAIHymoGGFzIan72gehyx-gfko39180iAAIBpwACHb8xSNyzXjT4k1MNOwQ",
+    "media_type": "video"
+  },
+  "card_047": {
+    "name": "Кагуя",
+    "element": "дерево",
+    "rating": 101,
+    "media": "BAACAgIAAxkBAAIHr2oGGCsh62rNxZCEx5zudXRDmQ9bAAL9pgACHb8xSAzPOHwAAXaimDsE",
+    "media_type": "video"
+  },
+  "card_048": {
+    "name": "Гильгамеш",
+    "element": "песок",
+    "rating": 101,
+    "media": "BAACAgIAAxkBAAIHjWoGF9Wl66mIvWBIEa1pYP3peX23AAL5pgACHb8xSDKYt-3yAUGIOwQ",
+    "media_type": "video"
+  },
+  "card_049": {
+    "name": "Нацу",
+    "element": "огонь",
+    "rating": 101,
+    "media": "BAACAgIAAxkBAAIHh2oGF6za9MMwKsjVJWOUcL61QfpLAAL2pgACHb8xSEjDukJ3QzmrOwQ",
+    "media_type": "video"
+  },
+  "card_050": {
+    "name": "Джинву",
+    "element": "вода",
+    "rating": 101,
+    "media": "BAACAgIAAxkBAAIHe2oGF3ptytZOgyHosS3abNzUdSE1AAL1pgACHb8xSEdvJxJrfagAATsE",
+    "media_type": "video"
+  },
+  "card_051": {
+    "name": "Тэто",
+    "element": "огонь",
+    "rating": 90,
+    "media": "AgACAgIAAxkBAAILBGoGM6zCth0rWShcvuswtkGKnnTHAAIGGmsbHb8xSB-o18WTvlj3AQADAgADeQADOwQ",
+    "media_type": "photo"
+  }
+}
