@@ -1,0 +1,110 @@
+[
+  {
+    "code": "BOT_DZL209",
+    "date": "14.05.2026 21:40",
+    "p1_id": 7561678959,
+    "p1_name": "/",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 3,
+    "score_p2": 1,
+    "result": "/ победил",
+    "is_bot": true
+  },
+  {
+    "code": "BOT_LFJWRP",
+    "date": "14.05.2026 21:42",
+    "p1_id": 7133785280,
+    "p1_name": "Yarik_Folze",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 2,
+    "score_p2": 2,
+    "result": "Ничья",
+    "is_bot": true
+  },
+  {
+    "code": "BOT_8CMYDH",
+    "date": "14.05.2026 21:45",
+    "p1_id": 7133785280,
+    "p1_name": "Yarik_Folze",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 2,
+    "score_p2": 2,
+    "result": "Ничья",
+    "is_bot": true
+  },
+  {
+    "code": "BOT_OS4EUY",
+    "date": "14.05.2026 23:12",
+    "p1_id": 7133785280,
+    "p1_name": "Yarik_Folze",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 2,
+    "score_p2": 1,
+    "result": "Yarik_Folze победил",
+    "is_bot": true
+  },
+  {
+    "code": "BOT_LKHYT4",
+    "date": "15.05.2026 05:24",
+    "p1_id": 7561678959,
+    "p1_name": "/",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 3,
+    "score_p2": 1,
+    "result": "/ победил",
+    "is_bot": true
+  },
+  {
+    "code": "3LL2PG",
+    "date": "15.05.2026 22:22",
+    "p1_id": 7133785280,
+    "p1_name": "Yarik_Folze",
+    "p2_id": 7561678959,
+    "p2_name": "/",
+    "score_p1": 3,
+    "score_p2": 2,
+    "result": "Yarik_Folze победил",
+    "is_bot": false
+  },
+  {
+    "code": "BOT_B8IBNE",
+    "date": "16.05.2026 10:35",
+    "p1_id": 7561678959,
+    "p1_name": "/",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 3,
+    "score_p2": 2,
+    "result": "/ победил",
+    "is_bot": true
+  },
+  {
+    "code": "BOT_WS6DP1",
+    "date": "16.05.2026 10:38",
+    "p1_id": 7561678959,
+    "p1_name": "/",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 2,
+    "score_p2": 1,
+    "result": "/ победил",
+    "is_bot": true
+  },
+  {
+    "code": "BOT_3HO7BV",
+    "date": "16.05.2026 12:08",
+    "p1_id": 7561678959,
+    "p1_name": "/",
+    "p2_id": "BOT",
+    "p2_name": "🤖 БОТ",
+    "score_p1": 4,
+    "score_p2": 0,
+    "result": "/ победил",
+    "is_bot": true
+  }
+]
