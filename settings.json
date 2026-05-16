@@ -1,0 +1,7 @@
+{
+  "duel_cards": 6,
+  "bot_difficulty": "weak",
+  "duel_rounds": 5,
+  "bot_timeout": 60,
+  "player_timeout": 120
+}
