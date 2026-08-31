@@ -533,4 +533,207 @@ end)
 
 local function resetToDefaultHardwareLayout()
     if IsMobileDevice then
-        updateStatus("MOBILE IDLE", Co
+        updateStatus("MOBILE IDLE", Color3.fromRGB(15, 30, 50), Color3.fromRGB(34, 72, 110))
+        TrackLabel.Text = "📱 MOBILE AUTOMATION ENFORCED // STANDBY"
+    else
+        updateStatus("PC STANDBY", Color3.fromRGB(15, 30, 50), Color3.fromRGB(34, 72, 110))
+        TrackLabel.Text = "🖥️ PC AUTOMATION ENFORCED // STANDBY"
+    end
+end
+
+local function saveRecordingData()
+    State.IsRecording = false 
+    RecordBtn.Text = "🔴 RECORD STRAT"
+    RecordBtn.BackgroundColor3 = Color3.fromRGB(156, 32, 61)
+    
+    if #State.MacroCache > 0 then
+        State.SequenceDuration = os.clock() - State.StartTime
+        saveMacroToDisk()
+    else
+        State.SequenceDuration = 0
+        LogLabel.Text = "⚠️ Sniffer closed; no inputs were captured."
+        LogLabel.TextColor3 = Color3.fromRGB(255, 180, 100)
+    end
+    
+    resetToDefaultHardwareLayout()
+    refreshTelemetry()
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not State.IsRecording or State.IsPlaying then return end
+
+    local isClick = (input.UserInputType == Enum.UserInputType.MouseButton1)
+    local isTouch = (input.UserInputType == Enum.UserInputType.Touch)
+    if not (isClick or isTouch) then return end
+
+    local inputLocation = UserInputService:GetMouseLocation()
+    if isTouch then inputLocation = Vector2.new(input.Position.X, input.Position.Y) end
+
+    local uiHits = Player.PlayerGui:GetGuiObjectsAtPosition(inputLocation.X, inputLocation.Y)
+    for _, guiObj in pairs(uiHits) do
+        if guiObj:IsDescendantOf(UI) then return end
+    end
+
+    local stamp = os.clock() - State.StartTime
+    table.insert(State.MacroCache, {
+        Delay = stamp,
+        Coords = inputLocation
+    })
+
+    LogLabel.Text = "🎯 Logged action " .. #State.MacroCache .. " at coord: [" .. math.floor(inputLocation.X) .. ", " .. math.floor(inputLocation.Y) .. "]"
+    LogLabel.TextColor3 = Color3.fromRGB(180, 210, 255)
+    
+    renderVisualNodes()
+end)
+
+RunService.RenderStepped:Connect(function()
+    if State.IsRecording then
+        local liveTimeline = os.clock() - State.StartTime
+        TelemetryLabel.Text = "Placements: " .. #State.MacroCache .. "  |  Timeline: " .. string.format("%.1fs", liveTimeline) .. "  |  Recording..."
+    end
+end)
+
+RecordBtn.MouseButton1Click:Connect(function()
+    if State.IsPlaying then return end
+
+    if not State.IsRecording then
+        State.MacroCache = {}
+        clearVisualNodes()
+        State.StartTime = os.clock()
+        State.IsRecording = true 
+
+        RecordBtn.Text = "⏹️ SAVE STRAT"
+        RecordBtn.BackgroundColor3 = Color3.fromRGB(191, 44, 78)
+
+        updateStatus("RECORDING", Color3.fromRGB(156, 32, 61), Color3.fromRGB(255, 90, 110))
+        LogLabel.Text = "🔴 Sniffer Active. Deploy/upgrade towers now..."
+        LogLabel.TextColor3 = Color3.fromRGB(255, 130, 140)
+    else
+        saveRecordingData()
+    end
+end)
+
+local function stopPlayback()
+    State.IsPlaying = false
+    for _, thread in pairs(PlaybackThreads) do
+        pcall(function() task.cancel(thread) end)
+    end
+    PlaybackThreads = {}
+    
+    PlayBtn.Text = "▶ AUTOPLAY"
+    PlayBtn.BackgroundColor3 = Color3.fromRGB(31, 122, 66)
+    
+    resetToDefaultHardwareLayout()
+    renderVisualNodes()
+end
+
+PlayBtn.MouseButton1Click:Connect(function()
+    if State.IsRecording then 
+        saveRecordingData()
+        task.wait(0.1)
+    end
+
+    if #State.MacroCache == 0 then
+        LogLabel.Text = "❌ Process Denied: Operational layout map is empty."
+        LogLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        return
+    end
+
+    if State.IsPlaying then
+        stopPlayback()
+        LogLabel.Text = "⏹️ Autoplay execution stopped."
+        LogLabel.TextColor3 = Color3.fromRGB(132, 145, 156)
+        return
+    end
+
+    State.IsPlaying = true
+    clearVisualNodes()
+    PlayBtn.Text = "⏹️ STOP"
+    PlayBtn.BackgroundColor3 = Color3.fromRGB(191, 44, 78)
+    updateStatus("AUTOPLAY", Color3.fromRGB(16, 70, 38), Color3.fromRGB(90, 210, 130))
+    LogLabel.Text = "⚡ Simulating active placement paths..."
+    LogLabel.TextColor3 = Color3.fromRGB(130, 220, 255)
+
+    local function executeMacroLoop()
+        while State.IsPlaying do
+            local loopStartTime = os.clock()
+            local totalLength = State.SequenceDuration
+            
+            for i, taskItem in ipairs(State.MacroCache) do
+                if not State.IsPlaying then break end
+                
+                local nextDelay = taskItem.Delay - (os.clock() - loopStartTime)
+                if nextDelay > 0 then task.wait(nextDelay) end
+                
+                if not State.IsPlaying then break end
+                
+                pcall(function()
+                    VirtualInputManager:SendMouseButtonEvent(taskItem.Coords.X, taskItem.Coords.Y, 0, true, game, 0)
+                    task.wait(0.04)
+                    VirtualInputManager:SendMouseButtonEvent(taskItem.Coords.X, taskItem.Coords.Y, 0, false, game, 0)
+                end)
+                
+                TelemetryLabel.Text = "Deploying Step: " .. i .. " / " .. #State.MacroCache
+            end
+            
+            local remainingLoopTime = totalLength - (os.clock() - loopStartTime)
+            if remainingLoopTime > 0 and State.IsPlaying then task.wait(remainingLoopTime) end
+            
+            if not State.IsLooped then break end
+            if State.IsPlaying then LogLabel.Text = "🔄 Loop Cycle: Resetting placement map timeline..." end
+        end
+        
+        if IsMobileDevice and (not State.IsLooped) and State.IsPlaying then
+            LogLabel.Text = "🦘 Macro complete. Triggering Mobile Anti-AFK Jump..."
+            LogLabel.TextColor3 = Color3.fromRGB(100, 190, 255)
+            
+            pcall(function()
+                local CurrentViewport = workspace.CurrentCamera.ViewportSize
+                local JumpButtonX = CurrentViewport.X * 0.85
+                local JumpButtonY = CurrentViewport.Y * 0.77
+                
+                VirtualInputManager:SendMouseButtonEvent(JumpButtonX, JumpButtonY, 0, true, game, 0)
+                task.wait(0.05)
+                VirtualInputManager:SendMouseButtonEvent(JumpButtonX, JumpButtonY, 0, false, game, 0)
+            end)
+            task.wait(0.5)
+        end
+        
+        stopPlayback()
+        LogLabel.Text = "🏁 Strategy deployment fully complete."
+        LogLabel.TextColor3 = Color3.fromRGB(140, 210, 255)
+    end
+
+    local mainThread = task.spawn(executeMacroLoop)
+    table.insert(PlaybackThreads, mainThread)
+end)
+
+-- =============================================================================
+-- 🗑️ FIXED HARD RESET BUTTON ENGINE
+-- =============================================================================
+WipeBtn.MouseButton1Click:Connect(function()
+    if State.IsRecording or State.IsPlaying then return end
+    
+    -- Force absolute zero state in memory cache instantly
+    State.MacroCache = {}
+    State.SequenceDuration = 0
+    State.StartTime = os.clock()
+    
+    -- Instantly wipe visual blue nodes out of the viewport
+    clearVisualNodes()
+    
+    -- Write the completely blank profile directly over the active slot file
+    saveMacroToDisk()
+    
+    -- Update telemetry and text systems to reflect the clean slate
+    LogLabel.Text = "🗑️ Profile completely wiped. Active storage slot cleared out!"
+    LogLabel.TextColor3 = Color3.fromRGB(240, 110, 110)
+    
+    resetToDefaultHardwareLayout()
+    refreshTelemetry()
+end)
+
+-- Initial baseline load configuration
+loadMacroFromDisk()
+resetToDefaultHardwareLayout()
+refreshTelemetry()
